@@ -32,6 +32,13 @@ def flush(dataset):
     db.session.commit()
 
 
+@manager.command
+def cluster(dataset):
+    ds = Dataset.by_name(dataset)
+    from nomenklatura.model.cluster import generate_clusters
+    generate_clusters(ds)
+
+
 if __name__ == '__main__':
     manager.run()
 

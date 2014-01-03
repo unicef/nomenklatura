@@ -11,6 +11,7 @@ sudo npm install -g bower less uglify-js
 
 virtualenv /home/vagrant/env
 source /home/vagrant/env/bin/activate
+pip install "numpy>=1.6"
 pip install -r /vagrant/requirements.txt
 pip install honcho
 echo "source /home/vagrant/env/bin/activate" >>/home/vagrant/.profile
