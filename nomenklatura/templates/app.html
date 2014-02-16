@@ -12,9 +12,9 @@
   <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
 
   {% assets filters="less,cssmin,cssrewrite", output="gen/style.css",
-      "vendor/bootstrap/less/bootstrap.less",
-      "vendor/font-awesome/less/font-awesome.less",
-      "style/style.less" %}
+      "nomenklatura/vendor/bootstrap/less/bootstrap.less",
+      "nomenklatura/vendor/font-awesome/less/font-awesome.less",
+      "nomenklatura/style/style.less" %}
     <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
   {% endassets %}
 
@@ -76,27 +76,27 @@
   {% endfor %}
 
   {% assets filters="uglifyjs", output="gen/app.js",
-        "vendor/jquery/jquery.js",
-        "vendor/bootstrap/js/collapse.js",
+        "nomenklatura/vendor/jquery/jquery.js",
+        "nomenklatura/vendor/bootstrap/js/collapse.js",
 
-        "vendor/angular/angular.js",
-        "vendor/angular-route/angular-route.js",
-        "vendor/angular-ui-bootstrap3/ui-bootstrap-tpls.js",
-        "vendor/ngUpload/ng-upload.js",
+        "nomenklatura/vendor/angular/angular.js",
+        "nomenklatura/vendor/angular-route/angular-route.js",
+        "nomenklatura/vendor/angular-ui-bootstrap3/ui-bootstrap-tpls.js",
+        "nomenklatura/vendor/ngUpload/ng-upload.js",
 
-        "js/app.js",
-        "js/services/session.js",
-        "js/directives/pagination.js",
-        "js/directives/keybinding.js",
-        "js/directives/authz.js",
-        "js/controllers/app.js",
-        "js/controllers/import.js",
-        "js/controllers/home.js",
-        "js/controllers/docs.js",
-        "js/controllers/review.js",
-        "js/controllers/datasets.js",
-        "js/controllers/entities.js",
-        "js/controllers/profile.js"
+        "nomenklatura/js/app.js",
+        "nomenklatura/js/services/session.js",
+        "nomenklatura/js/directives/pagination.js",
+        "nomenklatura/js/directives/keybinding.js",
+        "nomenklatura/js/directives/authz.js",
+        "nomenklatura/js/controllers/app.js",
+        "nomenklatura/js/controllers/import.js",
+        "nomenklatura/js/controllers/home.js",
+        "nomenklatura/js/controllers/docs.js",
+        "nomenklatura/js/controllers/review.js",
+        "nomenklatura/js/controllers/datasets.js",
+        "nomenklatura/js/controllers/entities.js",
+        "nomenklatura/js/controllers/profile.js"
          %}
       <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
