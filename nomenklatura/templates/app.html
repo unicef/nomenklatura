@@ -6,17 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>nomenklatura</title>
-  <meta name="description" content="nomenklatura is a data cleaning service. It helps data users to remove duplicate and near-duplicate entity references from their data by creating canonical
-  entity lists with aliases.">
+  <meta name="description" content="nomenklatura is a data cleaning service. It helps data users to remove duplicate and near-duplicate entity references from their data by creating canonical entity lists with aliases.">
 
   <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
 
   {% assets filters="less,cssmin,cssrewrite", output="gen/style.css",
       "nomenklatura/vendor/bootstrap/less/bootstrap.less",
-      "nomenklatura/vendor/font-awesome/less/font-awesome.less",
       "nomenklatura/style/style.less" %}
     <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
   {% endassets %}
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
   <link rel="shortcut icon" href="http://assets.pudo.org/img/favicon.ico" type="image/x-icon" />
 </head>
