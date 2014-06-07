@@ -1,5 +1,5 @@
 
-function DatasetsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, session) {
+function ProjectsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeout, session) {
     $scope.dataset = {};
     $scope.entities = {};
     $scope.new_entity = {};
@@ -68,10 +68,10 @@ function DatasetsViewCtrl($scope, $routeParams, $location, $http, $modal, $timeo
     };
 }
 
-DatasetsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'session'];
+ProjectsViewCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$modal', '$timeout', 'session'];
 
 
-function DatasetsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, session) {
+function ProjectsNewCtrl($scope, $routeParams, $modalInstance, $location, $http, session) {
     $scope.dataset = {};
 
     $scope.cancel = function() {
@@ -88,10 +88,10 @@ function DatasetsNewCtrl($scope, $routeParams, $modalInstance, $location, $http,
     };
 }
 
-DatasetsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'session'];
+ProjectsNewCtrl.$inject = ['$scope', '$routeParams', '$modalInstance', '$location', '$http', 'session'];
 
 
-function DatasetsEditCtrl($scope, $route, $routeParams, $modalInstance, $location, $http, dataset) {
+function ProjectsEditCtrl($scope, $route, $routeParams, $modalInstance, $location, $http, dataset) {
     $scope.dataset = angular.copy(dataset);
 
     $scope.cancel = function() {
@@ -108,4 +108,4 @@ function DatasetsEditCtrl($scope, $route, $routeParams, $modalInstance, $locatio
     };
 }
 
-DatasetsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$modalInstance', '$location', '$http', 'dataset'];
+ProjectsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$modalInstance', '$location', '$http', 'dataset'];

@@ -35,23 +35,19 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <table class="table table-condensed">
-            <tr>
-              <th>Owner</th>
+
               <th>Dataset</th>
               <th>Entities</th>
             </tr>
-            <tr ng-repeat="dataset in datasets.results">
+            <tr ng-repeat="project in projects.results">
                 <td>
-                  {{dataset.owner.login}}
-                </td>
-                <td>
-                  <a href="/datasets/{{dataset.name}}">{{dataset.label}}</a>
+                  <a href="#/projects/{{project.slug}}">{{project.label}}</a>
                 </td>
                 <td class="num">
-                  {{dataset.stats.num_entities}}
+                  {{project.entities_count}}
                 </td>
             </tr>
         </table>
-        <nk-pager class="pull-right" response="datasets" load="loadDatasets(url)"></odis-pager>
+        <nk-pager class="pull-right" response="projects" load="loadProjects(url)"></odis-pager>
     </div>
 </div>

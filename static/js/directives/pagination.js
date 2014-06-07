@@ -9,12 +9,12 @@ nomenklatura.directive('nkPager', ['$timeout', function ($timeout) {
         link: function (scope, element, attrs, model) {
             scope.showPager = false;
             scope.$watch('response', function(e) {
-                if (!scope.response.count) {
+                if (!scope.response.total) {
                     return;
                 }
                 var pages = [],
                     current = (scope.response.offset / scope.response.limit) + 1,
-                    num = Math.ceil(scope.response.count / scope.response.limit),
+                    num = Math.ceil(scope.response.total / scope.response.limit),
                     range = 3,
                     low = current - range,
                     high = current + range;
@@ -37,7 +37,7 @@ nomenklatura.directive('nkPager', ['$timeout', function ($timeout) {
                         url: url
                     });
                 }
-                scope.showPager = scope.response.count > scope.response.limit;
+                scope.showPager = scope.response.total > scope.response.limit;
                 scope.pages = pages;
             });
         }

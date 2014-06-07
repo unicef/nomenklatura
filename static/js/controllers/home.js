@@ -1,19 +1,19 @@
 function HomeCtrl($scope, $location, $http, $modal) {
-    $scope.datasets = {};
+    $scope.projects = {};
 
-    $scope.loadDatasets = function(url) {
+    $scope.loadProjects = function(url) {
         $http.get(url).then(function(data) {
-            $scope.datasets = data.data;
+            $scope.projects = data.data;
         });
     };
     
-    $scope.loadDatasets('/api/2/datasets?limit=10');
+    $scope.loadProjects('/api/1/projects?limit=10');
 
 
     $scope.newDataset = function(){
         var d = $modal.open({
-            templateUrl: '/static/templates/datasets/new.html',
-            controller: 'DatasetsNewCtrl'
+            templateUrl: 'projects/new.html',
+            controller: 'ProjectsNewCtrl'
         });
     };
 }

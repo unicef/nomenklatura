@@ -18,17 +18,17 @@ nomenklatura.config(['$routeProvider', '$locationProvider', '$sceProvider',
     controller: DocsCtrl
   });
 
-  $routeProvider.when('/datasets/:name', {
-    templateUrl: 'datasets/view.html',
-    controller: DatasetsViewCtrl
+  $routeProvider.when('/projects/:name', {
+    templateUrl: 'projects/view.html',
+    controller: ProjectsViewCtrl
   });
 
-  $routeProvider.when('/datasets/:dataset/uploads/:upload', {
+  $routeProvider.when('/projects/:dataset/uploads/:upload', {
     templateUrl: 'mapping.html',
     controller: MappingCtrl
   });
 
-  $routeProvider.when('/datasets/:dataset/review/:what', {
+  $routeProvider.when('/projects/:dataset/review/:what', {
     templateUrl: 'review.html',
     controller: ReviewCtrl
   });

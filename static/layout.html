@@ -28,7 +28,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">nomenklatura</a>
+        <a class="navbar-brand" href="#/">nomenklatura</a>
       </div>
 
       <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
@@ -41,10 +41,10 @@
               <i class="fa fa-github"></i> Sign In</a>
           </li>
           <li ng-show="session.logged_in">
-            <a href="/api/2/sessions/logout"><i class="fa fa-sign-out"></i> Sign Out</a>
+            <a href="/api/1/sessions/logout?next_url={{url_for('nomenklatura.index', _external=True)}}"><i class="fa fa-sign-out"></i> Sign Out</a>
           </li>
           <li>
-            <a href="/docs/introduction"><i class="fa fa-question-circle"></i> Help</a>
+            <a href="#/docs/introduction"><i class="fa fa-question-circle"></i> Help</a>
           </li>
         </ul>
       </div>
@@ -98,7 +98,7 @@
         "nomenklatura/js/controllers/home.js",
         "nomenklatura/js/controllers/docs.js",
         "nomenklatura/js/controllers/review.js",
-        "nomenklatura/js/controllers/datasets.js",
+        "nomenklatura/js/controllers/projects.js",
         "nomenklatura/js/controllers/entities.js",
         "nomenklatura/js/controllers/profile.js"
          %}

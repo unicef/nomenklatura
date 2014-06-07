@@ -15,7 +15,7 @@ function AppCtrl($scope, $window, $routeParams, $location, $modal, session) {
 
     $scope.showProfile = function() {
         var d = $modal.open({
-            templateUrl: '/static/templates/profile.html',
+            templateUrl: 'profile.html',
             controller: 'ProfileCtrl'
         });
     };
