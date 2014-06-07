@@ -4,51 +4,47 @@ nomenklatura.config(['$routeProvider', '$locationProvider', '$sceProvider',
     function($routeProvider, $locationProvider, $sceProvider) {
 
   $routeProvider.when('/', {
-    templateUrl: '/static/templates/home.html',
+    templateUrl: 'home.html',
     controller: HomeCtrl
   });
 
   $routeProvider.when('/docs/:page/:anchor', {
-    templateUrl: '/static/templates/pages/template.html',
+    templateUrl: 'pages/template.html',
     controller: DocsCtrl
   });
 
   $routeProvider.when('/docs/:page', {
-    templateUrl: '/static/templates/docs/template.html',
+    templateUrl: 'docs/template.html',
     controller: DocsCtrl
   });
 
   $routeProvider.when('/datasets/:name', {
-    templateUrl: '/static/templates/datasets/view.html',
+    templateUrl: 'datasets/view.html',
     controller: DatasetsViewCtrl
   });
 
   $routeProvider.when('/datasets/:dataset/uploads/:upload', {
-    templateUrl: '/static/templates/mapping.html',
+    templateUrl: 'mapping.html',
     controller: MappingCtrl
   });
 
   $routeProvider.when('/datasets/:dataset/review/:what', {
-    templateUrl: '/static/templates/review.html',
+    templateUrl: 'review.html',
     controller: ReviewCtrl
   });
 
   $routeProvider.when('/entities/:id', {
-    templateUrl: '/static/templates/entities/view.html',
+    templateUrl: 'entities/view.html',
     controller: EntitiesViewCtrl
   });
 
-  $routeProvider.otherwise({
-    redirectTo: visitPath
-  });
-
-  $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(false);
   //$sceProvider.enabled(false);
 }]);
 
-function visitPath(o, path) {
-  window.location.reload(true);
-}
+//function visitPath(o, path) {
+//  window.location.reload(true);
+//}
 
 
 nomenklatura.handleFormError = function(form) {

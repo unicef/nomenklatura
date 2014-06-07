@@ -7,7 +7,6 @@
 
   <title>nomenklatura</title>
   <meta name="description" content="nomenklatura is a data cleaning service. It helps data users to remove duplicate and near-duplicate entity references from their data by creating canonical entity lists with aliases.">
-
   <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
 
   {% assets filters="less,cssmin,cssrewrite", output="gen/style.css",
@@ -38,7 +37,8 @@
             <a ng-click="showProfile()"><i class="fa fa-cogs"></i> Profile</a>
           </li>
           <li ng-hide="session.logged_in">
-            <a href="/api/2/sessions/login"><i class="fa fa-github"></i> Sign In</a>
+            <a href="/api/1/sessions/login/github?next_url={{url_for('nomenklatura.index', _external=True)}}">
+              <i class="fa fa-github"></i> Sign In</a>
           </li>
           <li ng-show="session.logged_in">
             <a href="/api/2/sessions/logout"><i class="fa fa-sign-out"></i> Sign Out</a>
@@ -74,15 +74,20 @@
     <script id="{{path}}" type="text/ng-template">{{tmpl|safe}}</script>
   {% endfor %}
 
-  {% assets filters="uglifyjs", output="gen/app.js",
+  {% assets filters="uglifyjs", output="gen/deps.js",
         "nomenklatura/vendor/jquery/jquery.js",
         "nomenklatura/vendor/bootstrap/js/collapse.js",
 
         "nomenklatura/vendor/angular/angular.js",
         "nomenklatura/vendor/angular-route/angular-route.js",
         "nomenklatura/vendor/angular-ui-bootstrap3/ui-bootstrap-tpls.js",
-        "nomenklatura/vendor/ngUpload/ng-upload.js",
+        "nomenklatura/vendor/ngUpload/ng-upload.js"
+         %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+  <script type="text/javascript" src="config.js"></script>
 
+  {% assets filters="uglifyjs", output="gen/app.js",
         "nomenklatura/js/app.js",
         "nomenklatura/js/services/session.js",
         "nomenklatura/js/directives/pagination.js",

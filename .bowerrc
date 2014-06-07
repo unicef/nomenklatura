@@ -1,4 +1,4 @@
 {
-  "directory": "nomenklatura/static/vendor",
+  "directory": "static/vendor",
   "json": "bower.json"
 }
