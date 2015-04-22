@@ -2,8 +2,8 @@ import json
 
 from flask import Blueprint, request, url_for
 from apikit import jsonify, get_limit, get_offset
+from werkzeug.exceptions import BadRequest
 
-from nomenklatura.exc import BadRequest
 from nomenklatura.model import Dataset, Entity
 from nomenklatura.model.matching import find_matches
 

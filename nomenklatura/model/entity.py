@@ -5,9 +5,9 @@ from formencode import FancyValidator
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload_all, backref
 from sqlalchemy.dialects.postgresql import HSTORE
+from werkzeug.exceptions import NotFound
 
 from nomenklatura.core import db
-from nomenklatura.exc import NotFound
 from nomenklatura.model.text import normalize_text
 
 
