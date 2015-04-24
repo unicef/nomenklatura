@@ -1,5 +1,9 @@
 import os
 
+def bool_env(val):
+    """Replaces string based environment values with Python booleans"""
+    return True if os.environ.get(val, 'False').lower() == 'true' else False
+
 #DEBUG = True
 SECRET_KEY = os.environ.get('SECRET_KEY')
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL',
@@ -17,3 +21,5 @@ S3_ACCESS_KEY = os.environ.get('S3_ACCESS_KEY')
 S3_SECRET_KEY = os.environ.get('S3_SECRET_KEY')
 
 CELERY_BROKER = os.environ.get('CLOUDAMQP_URL')
+
+SIGNUP_DISABLED = bool_env('SIGNUP_DISABLED')

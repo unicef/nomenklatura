@@ -2,9 +2,10 @@ import requests
 from flask import url_for, session, Blueprint, redirect
 from flask import request
 from apikit import jsonify
+from werkzeug.exceptions import Forbidden
 
 from nomenklatura import authz
-from nomenklatura.core import db, github
+from nomenklatura.core import app, db, github
 from nomenklatura.model import Account, Dataset
 
 section = Blueprint('sessions', __name__)
@@ -61,6 +62,8 @@ def authorized(resp):
         session[k] = v
     account = Account.by_github_id(data.get('id'))
     if account is None:
+        if app.config.get('SIGNUP_DISABLED'):
+            raise Forbidden("Sorry, account creation is disabled")
         account = Account.create(data)
         db.session.commit()
     return redirect('/')
