@@ -7,15 +7,16 @@ nomenklatura.directive('nkPager', ['$timeout', function ($timeout) {
         },
         templateUrl: '/static/templates/pager.html',
         link: function (scope, element, attrs, model) {
-            scope.showPager = false;
             scope.$watch('response', function(e) {
-                if (!scope.response.count) {
+                scope.showPager = false;
+                scope.pages = [];
+                if (scope.response.pages <= 1) {
                     return;
                 }
                 var pages = [],
                     current = (scope.response.offset / scope.response.limit) + 1,
-                    num = Math.ceil(scope.response.count / scope.response.limit),
-                    range = 3,
+                    num = Math.ceil(scope.response.total / scope.response.limit),
+                    range = 2,
                     low = current - range,
                     high = current + range;
 
@@ -33,11 +34,11 @@ nomenklatura.directive('nkPager', ['$timeout', function ($timeout) {
                         url = scope.response.format.replace('LIMIT', scope.response.limit).replace('OFFSET', offset);
                     pages.push({
                         page: page,
-                        current: page==current,
+                        current: page == current,
                         url: url
                     });
                 }
-                scope.showPager = scope.response.count > scope.response.limit;
+                scope.showPager = true;
                 scope.pages = pages;
             });
         }

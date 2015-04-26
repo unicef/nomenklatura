@@ -18,7 +18,7 @@ function EntitiesViewCtrl($scope, $routeParams, $location, $http, $modal, $timeo
     function loadAliases(url) {
         $http.get(url).then(function(res) {
             $scope.aliases = res.data;
-            $scope.has_aliases = res.data.count > 0;
+            $scope.has_aliases = res.data.total > 0;
         });
     }
 
