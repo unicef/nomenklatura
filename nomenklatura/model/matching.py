@@ -34,7 +34,7 @@ class Matches(object):
 
 def find_matches(dataset, text, filter=None, exclude=None):
     entities = Entity.__table__
-    match_text = normalize(text, dataset)[:254]
+    match_text = normalize(text or '')[:254]
 
     # select text column and apply necesary transformations
     text_field = entities.c.name
