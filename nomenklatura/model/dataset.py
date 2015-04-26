@@ -148,3 +148,8 @@ class Dataset(db.Model):
         db.session.add(self)
         db.session.flush()
 
+    def delete(self):
+        from nomenklatura.model.entity import Entity
+        Entity.all(self).delete()
+        db.session.delete(self)
+        db.session.flush()

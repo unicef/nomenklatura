@@ -44,3 +44,11 @@ def update(dataset):
     dataset.update(request_data())
     db.session.commit()
     return redirect(url_for('.view', dataset=dataset.name))
+
+@section.route('/datasets/<dataset>', methods=['DELETE'])
+def delete(dataset):
+    dataset = Dataset.find(dataset)
+    authz.require(authz.dataset_manage(dataset))
+    dataset.delete()
+    db.session.commit()
+    return ('', 204)

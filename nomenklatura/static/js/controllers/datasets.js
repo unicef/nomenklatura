@@ -107,6 +107,21 @@ function DatasetsEditCtrl($scope, $route, $routeParams, $modalInstance, $locatio
         });
         res.error(nomenklatura.handleFormError(form));
     };
+
+    $scope.delete = function() {
+        if (prompt('Do you really want to delete this dataset and all its entities? If yes, type DELETE') !== 'DELETE') {
+            $modalInstance.dismiss('cancel');
+            return;
+        }
+        var res = $http.delete('/api/2/datasets/' + $scope.dataset.name);
+        res.success(function(data) {
+            $location.path('/');
+            $modalInstance.dismiss('ok');
+        });
+        res.error(function() {
+            $modalInstance.dismiss('cancel');
+        });
+    };
 }
 
 DatasetsEditCtrl.$inject = ['$scope', '$route', '$routeParams', '$modalInstance', '$location', '$http', 'dataset'];
