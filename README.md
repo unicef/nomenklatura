@@ -6,6 +6,11 @@ The service will create references for all entities mentioned in a source datase
 
 The focus of nomenklatura is on data integration, it does not provide further functionality with regards to the people and organisations that it helps to keep track of. 
 
+### About this fork
+This is a fork of [pudo/nomenklatura](https://github.com/pudo/nomenklatura). OpenNames.org, a public hosted instance of nomenklatura got [recently shut down](https://github.com/pudo/nomenklatura/wiki/OpenNames.org-Shutdown-Notice) because the project has taken a different direction. This fork tries to maintain a compatible version of nomenklatura thats usable as an plug-in replacement.
+
+A docker image is available as `robbi5/nomenklatura` in the [docker index](https://registry.hub.docker.com/u/robbi5/nomenklatura/).
+
 
 ### Contact, contributions etc.
 
