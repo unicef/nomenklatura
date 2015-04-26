@@ -13,6 +13,6 @@ nomenklatura:
     GITHUB_CLIENT_SECRET: CHANGE_ME
 
 database:
-  build: contrib/postgres-nk-hstore
+  image: postgres:9.4
   environment:
     POSTGRES_USER: nomenklatura

@@ -14,6 +14,8 @@ manager.add_command('assets', ManageAssets(assets))
 @manager.command
 def createdb():
     """ Make the database. """
+    db.engine.execute("CREATE EXTENSION IF NOT EXISTS hstore;")
+    db.engine.execute("CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;")
     db.create_all()
 
 
