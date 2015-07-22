@@ -3,4 +3,9 @@
 mkdir -p nomenklatura/static/vendor
 bower install --allow-root --config.interactive=false
 python nomenklatura/manage.py createdb
-python nomenklatura/manage.py runserver -p 8080 -h 0.0.0.0
+exec gunicorn nomenklatura.manage:app \
+    --bind 0.0.0.0:8080 \
+    --workers 4 \
+    --access-logfile -
+# for debugging: add \ to the previous line and
+#   --log-level debug
