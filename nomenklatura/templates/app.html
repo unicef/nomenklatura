@@ -49,6 +49,10 @@
       </div>
     </nav>
 
+    {% if system_message %}
+    <div class="alert alert-warning system-message"><p>{{ system_message }}</p></div>
+    {% endif %}
+
     <div id="airlock" class="container">
       <div class="row" ng-view></div>
     </div>

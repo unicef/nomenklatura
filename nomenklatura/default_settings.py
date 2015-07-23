@@ -11,3 +11,5 @@ ALLOWED_EXTENSIONS = set(['csv', 'tsv', 'ods', 'xls', 'xlsx', 'txt'])
 
 SIGNUP_DISABLED = False
 DATASET_CREATION_DISABLED = False
+
+SYSTEM_MESSAGE = ''

@@ -3,6 +3,7 @@
 mkdir -p nomenklatura/static/vendor
 bower install --allow-root --config.interactive=false
 python nomenklatura/manage.py createdb
+# python nomenklatura/manage.py assets build
 exec gunicorn nomenklatura.manage:app \
     --bind 0.0.0.0:8080 \
     --workers 4 \
