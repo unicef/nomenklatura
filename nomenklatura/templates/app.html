@@ -37,10 +37,10 @@
             <a ng-click="showProfile()"><i class="fa fa-cogs"></i> Profile</a>
           </li>
           <li ng-hide="session.logged_in">
-            <a target="_self" href="/api/2/sessions/login"><i class="fa fa-github"></i> Sign In</a>
+            <a href="/api/2/sessions/login" target="_self"><i class="fa fa-github"></i> Sign In</a>
           </li>
           <li ng-show="session.logged_in">
-            <a target="_self" href="/api/2/sessions/logout"><i class="fa fa-sign-out"></i> Sign Out</a>
+            <a href="/api/2/sessions/logout" target="_self"><i class="fa fa-sign-out"></i> Sign Out</a>
           </li>
           <li>
             <a href="/docs/introduction"><i class="fa fa-question-circle"></i> Help</a>

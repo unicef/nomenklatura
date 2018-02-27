@@ -1,4 +1,5 @@
 import logging
+from logging.handlers import RotatingFileHandler
 
 from flask import Flask
 from flask import url_for as _url_for
@@ -18,6 +19,18 @@ app = Flask(__name__)
 app.config.from_object(default_settings)
 app.config.from_envvar('NOMENKLATURA_SETTINGS', silent=True)
 app_name = app.config.get('APP_NAME')
+
+file_handler = RotatingFileHandler('/var/log/nomenklatura/errors.log',
+                                    maxBytes=1024 * 1024 * 100,
+                                    backupCount=20)
+file_handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler.setFormatter(formatter)
+app.logger.addHandler(file_handler)
+
+if app.debug is not True:
+    from raven.contrib.flask import Sentry
+    sentry = Sentry(app, dsn=app.config.get('SENTRY_DSN'))
 
 db = SQLAlchemy(app)
 assets = Environment(app)

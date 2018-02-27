@@ -22,7 +22,7 @@ def create():
     authz.require(authz.dataset_create())
     dataset = Dataset.create(request_data(), request.account)
     db.session.commit()
-    return redirect(url_for('.view', dataset=dataset.name))
+    return redirect(url_for('.view', dataset=dataset.name, _external=True))
 
 
 @section.route('/datasets/<dataset>', methods=['GET'])
@@ -43,7 +43,7 @@ def update(dataset):
     authz.require(authz.dataset_manage(dataset))
     dataset.update(request_data())
     db.session.commit()
-    return redirect(url_for('.view', dataset=dataset.name))
+    return redirect(url_for('.view', dataset=dataset.name, _external=True))
 
 @section.route('/datasets/<dataset>', methods=['DELETE'])
 def delete(dataset):

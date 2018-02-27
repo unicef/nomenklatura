@@ -1,3 +1,5 @@
+import logging
+
 import requests
 from flask import url_for, session, Blueprint, redirect
 from flask import request
@@ -43,7 +45,7 @@ def login():
 
 @section.route('/sessions/logout')
 def logout():
-    authz.require(authz.logged_in())
+    logging.info(authz.require(authz.logged_in()))
     session.clear()
     return redirect('/')
 
@@ -52,7 +54,7 @@ def logout():
 @github.authorized_handler
 def authorized(resp):
     if 'access_token' not in resp:
-        return redirect(url_for('index'))
+        return redirect(url_for('index', _external=True))
     access_token = resp['access_token']
     session['access_token'] = access_token, ''
     res = requests.get('https://api.github.com/user?access_token=%s' % access_token,

@@ -43,7 +43,7 @@ def create():
     authz.require(authz.dataset_edit(dataset))
     entity = Entity.create(dataset, data, request.account)
     db.session.commit()
-    return redirect(url_for('.view', id=entity.id))
+    return redirect(url_for('.view', id=entity.id, _external=True))
 
 
 @section.route('/entities/<int:id>', methods=['GET'])
@@ -73,4 +73,4 @@ def update(id):
     authz.require(authz.dataset_edit(entity.dataset))
     entity.update(request_data(), request.account)
     db.session.commit()
-    return redirect(url_for('.view', id=entity.id))
+    return redirect(url_for('.view', id=entity.id, _external=True))
