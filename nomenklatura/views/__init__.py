@@ -39,13 +39,18 @@ def check_auth():
 @app.errorhandler(410)
 @app.errorhandler(500)
 def handle_exceptions(exc):
-    message = exc.get_description(request.environ)
-    message = message.replace('<p>', '').replace('</p>', '')
     body = {
         'status': exc.code,
         'name': exc.name,
         'message': message
     }
+    try:
+        message = exc.get_description(request.environ)
+        message = message.replace('<p>', '').replace('</p>', '')
+        body.update({'message': message})
+    except AttributeError:
+        pass
+
     headers = exc.get_headers(request.environ)
     return jsonify(body, status=exc.code,
                    headers=headers)
