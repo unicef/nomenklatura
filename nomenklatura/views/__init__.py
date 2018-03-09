@@ -42,7 +42,6 @@ def handle_exceptions(exc):
     body = {
         'status': exc.code,
         'name': exc.name,
-        'message': message
     }
     try:
         message = exc.get_description(request.environ)
