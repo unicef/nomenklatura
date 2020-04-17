@@ -4,9 +4,9 @@ from logging.handlers import RotatingFileHandler
 import certifi
 from celery import Celery
 from flask import Flask, url_for as _url_for
-from flask.ext.assets import Environment
-from flask.ext.oauth import OAuth
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_assets import Environment
+from flask_oauth import OAuth
+from flask_sqlalchemy import SQLAlchemy
 from kombu import Exchange, Queue
 
 from nomenklatura import default_settings
@@ -18,7 +18,8 @@ app.config.from_object(default_settings)
 app.config.from_envvar('NOMENKLATURA_SETTINGS', silent=True)
 app_name = app.config.get('APP_NAME')
 
-file_handler = RotatingFileHandler('/var/log/nomenklatura/errors.log',
+log_folder = app.config.get('LOG_FOLDER')
+file_handler = RotatingFileHandler('{}/errors.log'.format(log_folder),
                                    maxBytes=1024 * 1024 * 100,
                                    backupCount=20)
 file_handler.setLevel(logging.DEBUG)
@@ -35,13 +36,13 @@ assets = Environment(app)
 
 celery = Celery('nomenklatura', broker=app.config['CELERY_BROKER_URL'])
 
+celery = Celery(app_name, broker=app.config['CELERY_BROKER_URL'])
 queue_name = app_name + '_q'
 app.config['CELERY_DEFAULT_QUEUE'] = queue_name
 app.config['CELERY_QUEUES'] = (
     Queue(queue_name, Exchange(queue_name), routing_key=queue_name),
 )
 
-celery = Celery(app_name, broker=app.config['CELERY_BROKER_URL'])
 celery.config_from_object(app.config)
 
 oauth = OAuth()

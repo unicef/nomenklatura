@@ -1,5 +1,8 @@
-from flask.ext.assets import ManageAssets
-from flask.ext.script import Manager
+import logging
+
+from flask_assets import ManageAssets
+from flask_script import Manager
+from sqlalchemy.sql import Alias
 
 from nomenklatura.assets import assets
 from nomenklatura.core import db
@@ -8,11 +11,14 @@ from nomenklatura.views import app
 
 manager = Manager(app)
 manager.add_command('assets', ManageAssets(assets))
+logger = logging.getLogger(__name__)
 
 
 @manager.command
 def createdb():
     """ Make the database. """
+    logger.info('Create DB')
+    logger.info('Create Extensions')
     db.engine.execute("CREATE EXTENSION IF NOT EXISTS hstore;")
     db.engine.execute("CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;")
     db.create_all()
@@ -20,6 +26,7 @@ def createdb():
 
 @manager.command
 def flush(dataset):
+    logger.info('Flushing')
     ds = Dataset.by_name(dataset)
     for alias in Alias.all_unmatched(ds):
         db.session.delete(alias)

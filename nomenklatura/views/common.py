@@ -1,6 +1,6 @@
 import csv
 from datetime import datetime
-from StringIO import StringIO
+from io import StringIO
 
 from flask import Response
 
