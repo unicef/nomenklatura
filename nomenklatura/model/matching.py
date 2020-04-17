@@ -5,7 +5,7 @@ from nomenklatura.core import db
 from nomenklatura.model.entity import Entity
 
 
-class Matches(object):
+class Matches:
 
     def __init__(self, q):
         self.lq = self.q = q

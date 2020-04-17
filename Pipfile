@@ -1,0 +1,40 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+coverage = "*"
+flake8 = "*"
+flake8-html = "*"
+isort = "*"
+
+[packages]
+apikit = "*"
+celery = "*"
+certifi = "*"
+cssmin = "*"
+gunicorn = "*"
+normality = "*"
+nose = "*"
+oauth2 = "*"
+psycopg2-binary = "*"
+python-Levenshtein = "*"
+pytz = "*"
+redis = "*"
+requests = "*"
+sentry-sdk = "*"
+tablib = "*"
+webassets = "*"
+#wsgiref = "*"
+Flask = "*"
+Flask-Assets = "*"
+Flask-OAuth = "*"
+Flask-SQLAlchemy = "*"
+Flask-Script = "*"
+FormEncode = "*"
+SQLAlchemy = "*"
+Unidecode = "*"
+
+[requires]
+python_version = "3.8"

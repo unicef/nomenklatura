@@ -1,4 +1,4 @@
-from flask.ext.assets import Bundle
+from webassets import Bundle
 
 from nomenklatura.core import assets
 
