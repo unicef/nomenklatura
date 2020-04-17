@@ -1,11 +1,10 @@
 from datetime import datetime
 
+from formencode import All, FancyValidator, Invalid, Schema, validators
 from normality import normalize
-from formencode import Schema, All, Invalid, validators
-from formencode import FancyValidator
 from sqlalchemy import func
-from sqlalchemy.orm import joinedload_all, backref
 from sqlalchemy.dialects.postgresql import HSTORE
+from sqlalchemy.orm import backref, joinedload_all
 from werkzeug.exceptions import NotFound
 
 from nomenklatura.core import db

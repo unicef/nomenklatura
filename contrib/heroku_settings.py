@@ -1,13 +1,14 @@
 import os
 
+
 def bool_env(val):
     """Replaces string based environment values with Python booleans"""
     return True if os.environ.get(val, 'False').lower() == 'true' else False
 
-#DEBUG = True
+
+# DEBUG = True
 SECRET_KEY = os.environ.get('SECRET_KEY')
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL',
-                            os.environ.get('SHARED_DATABASE_URL'))
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', os.environ.get('SHARED_DATABASE_URL'))
 
 APP_NAME = os.environ.get('APP_NAME', 'nomenklatura')
 

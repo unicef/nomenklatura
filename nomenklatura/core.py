@@ -1,15 +1,13 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
-from flask import Flask
-from flask import url_for as _url_for
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.oauth import OAuth
-from flask.ext.assets import Environment
-
 import certifi
-from kombu import Exchange, Queue
 from celery import Celery
+from flask import Flask, url_for as _url_for
+from flask.ext.assets import Environment
+from flask.ext.oauth import OAuth
+from flask.ext.sqlalchemy import SQLAlchemy
+from kombu import Exchange, Queue
 
 from nomenklatura import default_settings
 
@@ -21,8 +19,8 @@ app.config.from_envvar('NOMENKLATURA_SETTINGS', silent=True)
 app_name = app.config.get('APP_NAME')
 
 file_handler = RotatingFileHandler('/var/log/nomenklatura/errors.log',
-                                    maxBytes=1024 * 1024 * 100,
-                                    backupCount=20)
+                                   maxBytes=1024 * 1024 * 100,
+                                   backupCount=20)
 file_handler.setLevel(logging.DEBUG)
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(formatter)
@@ -47,13 +45,14 @@ celery = Celery(app_name, broker=app.config['CELERY_BROKER_URL'])
 celery.config_from_object(app.config)
 
 oauth = OAuth()
-github = oauth.remote_app('github',
-        base_url='https://github.com/login/oauth/',
-        authorize_url='https://github.com/login/oauth/authorize',
-        request_token_url=None,
-        access_token_url='https://github.com/login/oauth/access_token',
-        consumer_key=app.config.get('GITHUB_CLIENT_ID'),
-        consumer_secret=app.config.get('GITHUB_CLIENT_SECRET'))
+github = oauth.remote_app(
+    'github',
+    base_url='https://github.com/login/oauth/',
+    authorize_url='https://github.com/login/oauth/authorize',
+    request_token_url=None,
+    access_token_url='https://github.com/login/oauth/access_token',
+    consumer_key=app.config.get('GITHUB_CLIENT_ID'),
+    consumer_secret=app.config.get('GITHUB_CLIENT_SECRET'))
 
 github._client.ca_certs = certifi.where()
 

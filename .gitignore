@@ -10,3 +10,4 @@ nomenklatura/static/assets/*
 nomenklatura/static/.webassets-cache/*
 .vagrant/*
 vagrant_settings.py
+.idea/

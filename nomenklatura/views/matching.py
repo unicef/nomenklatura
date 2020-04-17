@@ -1,11 +1,10 @@
 from random import randint
 
+from apikit import arg_int, jsonify, Pager
 from flask import Blueprint, request
-from apikit import jsonify, Pager, arg_int
 
-from nomenklatura.model.matching import find_matches
 from nomenklatura.model import Dataset, Entity
-
+from nomenklatura.model.matching import find_matches
 
 section = Blueprint('matching', __name__)
 
