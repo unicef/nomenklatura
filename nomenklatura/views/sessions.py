@@ -1,9 +1,8 @@
 import logging
 
 import requests
-from flask import url_for, session, Blueprint, redirect
-from flask import request
 from apikit import jsonify
+from flask import Blueprint, redirect, request, session, url_for
 from werkzeug.exceptions import Forbidden
 
 from nomenklatura import authz

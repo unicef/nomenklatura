@@ -1,11 +1,9 @@
-from normality import normalize
-from flask.ext.script import Manager
 from flask.ext.assets import ManageAssets
+from flask.ext.script import Manager
 
-from nomenklatura.core import db
-from nomenklatura.model import Entity
-from nomenklatura.views import app
 from nomenklatura.assets import assets
+from nomenklatura.core import db
+from nomenklatura.views import app
 
 manager = Manager(app)
 manager.add_command('assets', ManageAssets(assets))

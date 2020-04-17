@@ -1,6 +1,6 @@
+import csv
 from datetime import datetime
 from StringIO import StringIO
-import csv
 
 from flask import Response
 
@@ -10,7 +10,7 @@ def csv_value(v):
         return v
     if isinstance(v, datetime):
         return v.isoformat()
-    return unicode(v).encode('utf-8')
+    return str(v).encode('utf-8')
 
 
 def csvify(iterable, status=200, headers=None):

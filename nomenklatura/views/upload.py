@@ -1,11 +1,11 @@
+from apikit import jsonify, request_data
 from flask import Blueprint, request  # , url_for, flash
 from formencode import Invalid
-from apikit import jsonify, request_data
 
 from nomenklatura import authz
 from nomenklatura.core import db
-from nomenklatura.model import Dataset, Upload
 from nomenklatura.importer import import_upload
+from nomenklatura.model import Dataset, Upload
 
 section = Blueprint('upload', __name__)
 

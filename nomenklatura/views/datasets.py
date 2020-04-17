@@ -1,9 +1,8 @@
-from flask import Blueprint, request, url_for
-from flask import redirect
 from apikit import jsonify, Pager, request_data
+from flask import Blueprint, redirect, request, url_for
 
-from nomenklatura.core import db
 from nomenklatura import authz
+from nomenklatura.core import db
 from nomenklatura.model import Dataset
 from nomenklatura.model.matching import attribute_keys
 
@@ -44,6 +43,7 @@ def update(dataset):
     dataset.update(request_data())
     db.session.commit()
     return redirect(url_for('.view', dataset=dataset.name, _external=True))
+
 
 @section.route('/datasets/<dataset>', methods=['DELETE'])
 def delete(dataset):

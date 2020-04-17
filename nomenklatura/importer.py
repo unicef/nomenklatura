@@ -1,8 +1,7 @@
 from formencode import Invalid
 
-from nomenklatura.core import db
-from nomenklatura.core import celery as app
-from nomenklatura.model import Dataset, Entity, Account, Upload
+from nomenklatura.core import celery as app, db
+from nomenklatura.model import Account, Entity, Upload
 
 
 def apply_mapping(row, mapping):
@@ -39,11 +38,11 @@ def import_upload(upload_id, account_id, mapping):
             if entity is None:
                 entity = Entity.create(upload.dataset, row, account)
 
-            # restore some defaults: 
+            # restore some defaults:
             if entity.canonical_id and 'canonical' not in mapped:
                 row['canonical'] = entity.canonical_id
             if entity.invalid and 'invalid' not in mapped:
-                row['invalid'] = entity.invalid 
+                row['invalid'] = entity.invalid
 
             if entity.attributes:
                 attributes = entity.attributes.copy()
@@ -53,11 +52,11 @@ def import_upload(upload_id, account_id, mapping):
             row['attributes'] = attributes
 
             entity.update(row, account)
-            print entity
+            print(entity)
             if i % 100 == 0:
-                print 'COMMIT'
+                print('COMMIT')
                 db.session.commit()
-        except Invalid, inv:
-            # TODO: logging. 
-            print inv
+        except Invalid as inv:
+            # TODO: logging
+            print(inv)
     db.session.commit()

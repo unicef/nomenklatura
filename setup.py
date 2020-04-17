@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name='nomenklatura',
@@ -6,7 +6,8 @@ setup(
     description="Make record linkages on the web.",
     long_description='',
     classifiers=[
-        ],
+
+    ],
     keywords='data mapping identity linkage record',
     author='Open Knowledge Foundation',
     author_email='info@okfn.org',
@@ -19,6 +20,5 @@ setup(
     install_requires=[
     ],
     tests_require=[],
-    entry_points=\
-    """ """,
+    entry_points=""" """,
 )
