@@ -7,7 +7,7 @@
   <title>nomenklatura</title>
   <meta name="description" content="nomenklatura is a data cleaning service. It helps data users to remove duplicate and near-duplicate entity references from their data by creating canonical entity lists with aliases.">
 
-  <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700|Droid+Sans+Mono'
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700|Droid+Sans+Mono'
     rel='stylesheet' type='text/css'>
 
   {% assets "css" %}
@@ -48,6 +48,10 @@
         </ul>
       </div>
     </nav>
+
+    {% if system_message %}
+    <div class="alert alert-warning system-message"><p>{{ system_message }}</p></div>
+    {% endif %}
 
     <div id="airlock" class="container">
       <div class="row" ng-view></div>

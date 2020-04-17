@@ -1,6 +1,8 @@
 from apikit import jsonify, Pager, request_data
+from werkzeug.exceptions import Forbidden
 from flask import Blueprint, redirect, request, url_for
 
+from nomenklatura.core import app, db
 from nomenklatura import authz
 from nomenklatura.core import db
 from nomenklatura.model import Dataset
@@ -19,6 +21,8 @@ def index():
 @section.route('/datasets', methods=['POST'])
 def create():
     authz.require(authz.dataset_create())
+    if app.config.get('DATASET_CREATION_DISABLED'):
+        raise Forbidden("Sorry, dataset creation is disabled")
     dataset = Dataset.create(request_data(), request.account)
     db.session.commit()
     return redirect(url_for('.view', dataset=dataset.name, _external=True))
