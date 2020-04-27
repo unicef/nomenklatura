@@ -1,4 +1,4 @@
-## nomenklatura
+## Nomenklatura
 
 Nomenklatura de-duplicates and integrates different names for entities - people, organisations or public bodies - to help you clean up messy data and to find links between different datasets.
 

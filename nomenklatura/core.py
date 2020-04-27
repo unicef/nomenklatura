@@ -1,20 +1,19 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
-import certifi
 from celery import Celery
 from flask import Flask, url_for as _url_for
 from flask_assets import Environment
-from flask_oauth import OAuth
+from flask_oauthlib.client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from kombu import Exchange, Queue
 
-from nomenklatura import default_settings
+from nomenklatura import settings
 
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
-app.config.from_object(default_settings)
+app.config.from_object(settings)
 app.config.from_envvar('NOMENKLATURA_SETTINGS', silent=True)
 app_name = app.config.get('APP_NAME')
 
@@ -34,8 +33,6 @@ if app.debug is not True:
 db = SQLAlchemy(app)
 assets = Environment(app)
 
-celery = Celery('nomenklatura', broker=app.config['CELERY_BROKER_URL'])
-
 celery = Celery(app_name, broker=app.config['CELERY_BROKER_URL'])
 queue_name = app_name + '_q'
 app.config['CELERY_DEFAULT_QUEUE'] = queue_name
@@ -54,8 +51,6 @@ github = oauth.remote_app(
     access_token_url='https://github.com/login/oauth/access_token',
     consumer_key=app.config.get('GITHUB_CLIENT_ID'),
     consumer_secret=app.config.get('GITHUB_CLIENT_SECRET'))
-
-github._client.ca_certs = certifi.where()
 
 
 def url_for(*a, **kw):

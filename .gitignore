@@ -6,7 +6,6 @@ _store/*
 .env
 .envrc
 .venv/
-settings.py
 nomenklatura/static/vendor/*
 nomenklatura/static/assets/*
 nomenklatura/static/.webassets-cache/*
