@@ -1,6 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
+import sentry_sdk
 from celery import Celery
 from flask import Flask, url_for as _url_for
 from flask_assets import Environment
@@ -25,10 +26,6 @@ file_handler.setLevel(logging.DEBUG)
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(formatter)
 app.logger.addHandler(file_handler)
-
-if app.debug is not True:
-    from raven.contrib.flask import Sentry
-    sentry = Sentry(app, dsn=app.config.get('SENTRY_DSN'))
 
 db = SQLAlchemy(app)
 assets = Environment(app)
@@ -59,3 +56,7 @@ def url_for(*a, **kw):
         return _url_for(*a, **kw)
     except RuntimeError:
         return None
+
+
+if app.debug is not True and app.config['SENTRY_DSN']:
+    sentry_sdk.init(dsn=app.config['SENTRY_DSN'])
