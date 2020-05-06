@@ -13,8 +13,7 @@ Quick Installation
 ::
 
     pipenv install
-    sudo npm install -g less uglify-js bower
-    bower install
+    npm install  --prefix ./nomenklatura/static/vendor
 
     psql -c 'CREATE DATABASE nomenklatura;' -U postgres
 

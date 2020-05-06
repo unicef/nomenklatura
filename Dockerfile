@@ -53,9 +53,9 @@ RUN apk add postgresql-client \
 ADD contrib/*.sh /usr/local/bin/
 WORKDIR /var/nomenklatura
 
-RUN npm install -g less bower
-ADD bower.json .
-RUN bower install --allow-root --config.interactive=false
+ADD package.json .
+ADD package-lock.json .
+RUN npm install install
 
 ADD . /code/
 WORKDIR /code/

@@ -1,4 +1,5 @@
 import logging
+import os
 from logging.handlers import RotatingFileHandler
 
 import sentry_sdk
@@ -29,6 +30,11 @@ app.logger.addHandler(file_handler)
 
 db = SQLAlchemy(app)
 assets = Environment(app)
+
+assets.load_path = [
+    os.path.join(os.path.dirname(__file__), 'static'),
+    os.path.join(os.path.dirname(__file__), os.pardir, 'node_modules'),
+]
 
 celery = Celery(app_name, broker=app.config['CELERY_BROKER_URL'])
 queue_name = app_name + '_q'
