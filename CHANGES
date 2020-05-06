@@ -1,3 +1,10 @@
+Release 1.0
+----------------------
+* upgrade yo python 3.8
+* pipenv
+* flake8 and isort
+
+
 Release 0.1
 ----------------------
 

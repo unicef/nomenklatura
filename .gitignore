@@ -13,3 +13,4 @@ nomenklatura/static/.webassets-cache/*
 vagrant_settings.py
 .idea/
 dist/
+build/

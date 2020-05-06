@@ -13,8 +13,8 @@ Quick Installation
 ::
 
     pipenv install
+    sudo npm install -g less uglify-js bower
     bower install
-    sudo npm install -g less uglify-js
 
     psql -c 'CREATE DATABASE nomenklatura;' -U postgres
 
@@ -26,4 +26,4 @@ Quick Installation
 
 
 
-    NOMENKLATURA_SETTINGS='settings.py' python manage.py gunicorn\ No newline at end of file
+    python manage.py gunicorn
