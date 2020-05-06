@@ -20,15 +20,16 @@ with open(init, 'rb') as f:
 
 dependency_links = set()
 setup(
-    name='nomenklatura',
-    version='0.1',
+    name=NAME,
+    version=VERSION,
     description="Make record linkages on the web.",
     long_description='',
     classifiers=[
-        'Framework :: Flask',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
+        'Framework :: Flask',
+        'Framework :: Flake8',
     ],
     keywords='data mapping identity linkage record',
     author='Open Knowledge Foundation',
