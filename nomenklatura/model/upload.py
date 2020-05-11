@@ -41,7 +41,7 @@ class Upload(db.Model):
         if not hasattr(self, '_tab'):
             try:
                 self._tab = TablibDataset()
-                self._tab.csv = self.data
+                self._tab.csv = self.data.decode('utf-8')
                 self._tab_error = None
             except Exception as e:
                 self._tab = None
@@ -71,7 +71,6 @@ class Upload(db.Model):
         upload.dataset = dataset
         upload.creator = account
         upload.mimetype = file_.mimetype
-        upload.filename = file_.filename
         upload.filename = file_.filename
         upload.data = file_.read()
         db.session.add(upload)

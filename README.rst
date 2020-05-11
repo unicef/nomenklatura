@@ -22,8 +22,4 @@ Quick Installation
 
 
     python manage.py createdb
-    python manage.py gunicorn
-
-
-
-    python manage.py gunicorn
+    python manage.py runserver
