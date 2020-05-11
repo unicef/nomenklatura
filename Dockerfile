@@ -1,38 +1,72 @@
-FROM python:2.7-onbuild
-MAINTAINER robbi5 <robbi5@robbi5.de>
+FROM python:3.8.2-alpine as builder
 
-# install nodejs (from joyent/docker-node)
 
-# verify gpg and sha256: http://nodejs.org/dist/v0.10.31/SHASUMS256.txt.asc
-# gpg: aka "Timothy J Fontaine (Work) <tj.fontaine@joyent.com>"
-# gpg: aka "Julien Gilli <jgilli@fastmail.fm>"
-RUN gpg --keyserver pool.sks-keyservers.net --recv-keys 7937DFD2AB06298B2293C3187D33FF9D0246406D 114F43EE0176B71C7BC219DD50A3051F888C628D
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+RUN apk update
+RUN apk add --upgrade apk-tools
 
-ENV NODE_VERSION 0.10.38
-ENV NPM_VERSION 2.7.3
+RUN apk add \
+    --update alpine-sdk
 
-RUN curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
-	&& curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
-	&& gpg --verify SHASUMS256.txt.asc \
-	&& grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
-	&& tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
-	&& rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc \
-	&& npm install -g npm@"$NPM_VERSION" \
-	&& npm cache clear
+RUN apk add openssl \
+    ca-certificates \
+    libxml2-dev \
+    postgresql-dev \
+    jpeg-dev \
+    libffi-dev \
+    linux-headers \
+    python3-dev \
+    libxslt-dev \
+    xmlsec-dev
 
-# install other dependencies
 
-RUN \
-  apt-get update && \
-  apt-get install -y libpq-dev && \
-  npm install -g bower less uglify-js
+RUN apk add --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+    gcc \
+    g++
 
-RUN python setup.py develop
+RUN pip install --upgrade \
+    setuptools \
+    pip \
+    wheel \
+    pipenv
 
-VOLUME /usr/src/app
+WORKDIR /nomenklatura/
+ADD Pipfile .
+ADD Pipfile.lock .
+RUN pipenv install --system  --ignore-pipfile --deploy
 
-ENV NOMENKLATURA_SETTINGS /usr/src/app/contrib/heroku_settings.py
 
-CMD ["/usr/src/app/contrib/docker-run.sh"]
+FROM python:3.8.2-alpine
 
-EXPOSE 8080
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+RUN apk update
+RUN apk add --upgrade apk-tools
+RUN apk add postgresql-client \
+    openssl \
+    ca-certificates \
+    libxml2-dev \
+    jpeg \
+    nodejs-npm \
+    git
+
+
+ADD contrib/*.sh /usr/local/bin/
+WORKDIR /var/nomenklatura
+
+ADD package.json .
+ADD package-lock.json .
+RUN npm install install
+
+ADD . /code/
+WORKDIR /code/
+
+COPY --from=builder /usr/local/lib/python3.8/site-packages /usr/local/lib/python3.8/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/code
+
+ENTRYPOINT ["entrypoint.sh"]
+RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
+
+EXPOSE 8000

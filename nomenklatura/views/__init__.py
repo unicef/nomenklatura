@@ -1,19 +1,18 @@
 import os
 
-from flask import render_template, request
-from flask import session
-from werkzeug.exceptions import Unauthorized
-from formencode import Invalid
 from apikit import jsonify
+from flask import render_template, request, session
+from formencode import Invalid
+from werkzeug.exceptions import Unauthorized
 
 from nomenklatura.core import app
 from nomenklatura.model import Account
-from nomenklatura.views.upload import section as upload
-from nomenklatura.views.sessions import section as sessions
 from nomenklatura.views.datasets import section as datasets
 from nomenklatura.views.entities import section as entities
-from nomenklatura.views.reconcile import section as reconcile
 from nomenklatura.views.matching import section as matching
+from nomenklatura.views.reconcile import section as reconcile
+from nomenklatura.views.sessions import section as sessions
+from nomenklatura.views.upload import section as upload
 
 
 @app.before_request
@@ -33,13 +32,12 @@ def check_auth():
         request.account = None
 
 
-
 @app.errorhandler(Invalid)
 def handle_invalid(exc):
     body = {
         'status': 400,
         'name': 'Invalid Data',
-        'description': unicode(exc),
+        'description': str(exc),
         'errors': exc.unpack_errors()
     }
     return jsonify(body, status=400)
@@ -61,7 +59,7 @@ def angular_templates():
         for file_name in files:
             file_path = os.path.join(root, file_name)
             with open(file_path, 'rb') as fh:
-                yield ('/static/templates/%s' % file_path[len(partials_dir)+1:],
+                yield ('/static/templates/%s' % file_path[len(partials_dir) + 1:],
                        fh.read().decode('utf-8'))
 
 
@@ -73,4 +71,4 @@ def angular_templates():
 @app.route('/docs/<path:id>')
 @app.route('/')
 def index(**kw):
-    return render_template('app.html', angular_templates=angular_templates())
+    return render_template('app.html', angular_templates=angular_templates(), system_message=app.config.get('SYSTEM_MESSAGE'))

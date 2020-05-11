@@ -4,9 +4,14 @@
 *.egg-info
 _store/*
 .env
-settings.py
+.envrc
+.venv/
 nomenklatura/static/vendor/*
 nomenklatura/static/assets/*
 nomenklatura/static/.webassets-cache/*
 .vagrant/*
 vagrant_settings.py
+.idea/
+dist/
+build/
+node_modules/

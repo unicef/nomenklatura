@@ -1,11 +1,11 @@
-from flask import Blueprint, request  # , url_for, flash
-from formencode import Invalid
 from apikit import jsonify, request_data
+from flask import Blueprint, request
+from formencode import Invalid
 
 from nomenklatura import authz
 from nomenklatura.core import db
-from nomenklatura.model import Dataset, Upload
 from nomenklatura.importer import import_upload
+from nomenklatura.model import Dataset, Upload
 
 section = Blueprint('upload', __name__)
 
@@ -15,7 +15,7 @@ def upload(dataset):
     dataset = Dataset.find(dataset)
     authz.require(authz.dataset_edit(dataset))
     file_ = request.files.get('file')
-    if not file_ or not file_.filename:
+    if not (file_ and file_.filename):
         err = {'file': "You need to upload a file"}
         raise Invalid("No file.", None, None, error_dict=err)
     upload = Upload.create(dataset, request.account, file_)

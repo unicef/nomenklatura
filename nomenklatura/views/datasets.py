@@ -1,9 +1,9 @@
-from flask import Blueprint, request, url_for
-from flask import redirect
 from apikit import jsonify, Pager, request_data
+from flask import Blueprint, redirect, request, url_for
+from werkzeug.exceptions import Forbidden
 
-from nomenklatura.core import db
 from nomenklatura import authz
+from nomenklatura.core import app, db
 from nomenklatura.model import Dataset
 from nomenklatura.model.matching import attribute_keys
 
@@ -20,6 +20,8 @@ def index():
 @section.route('/datasets', methods=['POST'])
 def create():
     authz.require(authz.dataset_create())
+    if app.config.get('DATASET_CREATION_DISABLED'):
+        raise Forbidden("Sorry, dataset creation is disabled")
     dataset = Dataset.create(request_data(), request.account)
     db.session.commit()
     return redirect(url_for('.view', dataset=dataset.name, _external=True))
@@ -44,6 +46,7 @@ def update(dataset):
     dataset.update(request_data())
     db.session.commit()
     return redirect(url_for('.view', dataset=dataset.name, _external=True))
+
 
 @section.route('/datasets/<dataset>', methods=['DELETE'])
 def delete(dataset):

@@ -1,11 +1,11 @@
 from normality import normalize
-from sqlalchemy import func, select, and_
+from sqlalchemy import and_, func, select
 
-from nomenklatura.model.entity import Entity
 from nomenklatura.core import db
+from nomenklatura.model.entity import Entity
 
 
-class Matches(object):
+class Matches:
 
     def __init__(self, q):
         self.lq = self.q = q
@@ -34,7 +34,7 @@ class Matches(object):
 
 def find_matches(dataset, text, filter=None, exclude=None):
     entities = Entity.__table__
-    match_text = normalize(text or '')[:254]
+    match_text = (normalize(text) or '')[:254]
 
     # select text column and apply necesary transformations
     text_field = entities.c.name
@@ -45,8 +45,8 @@ def find_matches(dataset, text, filter=None, exclude=None):
     text_field = func.left(text_field, 254)
 
     # calculate the difference percentage
-    l = func.greatest(1.0, func.least(len(match_text), func.length(text_field)))
-    score = func.greatest(0.0, ((l - func.levenshtein(text_field, match_text)) / l) * 100.0)
+    min_l = func.greatest(1.0, func.least(len(match_text), func.length(text_field)))
+    score = func.greatest(0.0, ((min_l - func.levenshtein(text_field, match_text)) / min_l) * 100.0)
     score = func.max(score).label('score')
 
     # coalesce the canonical identifier
@@ -58,7 +58,7 @@ def find_matches(dataset, text, filter=None, exclude=None):
     if not dataset.match_aliases:
         filters.append(entities.c.canonical_id == None) # noqa
     if exclude is not None:
-        filters.append(entities.c.id!=exclude)
+        filters.append(entities.c.id != exclude)
     if filter is not None:
         filters.append(text_field.ilike('%%%s%%' % filter))
 

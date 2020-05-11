@@ -1,89 +1,97 @@
 <!doctype html>
 <html lang="en" ng-app="nomenklatura">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>nomenklatura</title>
-  <meta name="description" content="nomenklatura is a data cleaning service. It helps data users to remove duplicate and near-duplicate entity references from their data by creating canonical entity lists with aliases.">
+    <title>nomenklatura</title>
+    <meta name="description" content="nomenklatura is a data cleaning service. It helps data users to remove duplicate and near-duplicate entity references from their data by creating canonical entity lists with aliases.">
 
-  <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700|Droid+Sans+Mono'
-    rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700|Droid+Sans+Mono'
+          rel='stylesheet' type='text/css'>
 
-  {% assets "css" %}
-    <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
-  {% endassets %}
+    {% assets "css" %}
+        <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
+    {% endassets %}
 
-  {% assets "favicon.ico" %}
-    <link rel="shortcut icon" href="{{ ASSET_URL }}" type="image/x-icon" />
-  {% endassets %}
+    {% assets "favicon.ico" %}
+        <link rel="shortcut icon" href="{{ ASSET_URL }}" type="image/x-icon" />
+    {% endassets %}
+    <base href="/">
 </head>
 <body ng-controller="AppCtrl" ng-keyup="keyDownNotify($event)">
-  <div id="page">
+<div id="page">
     <nav class="navbar navbar-default" role="navigation" id="menu">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">nomenklatura</a>
-      </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">nomenklatura</a>
+        </div>
 
-      <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
-        <ul class="nav navbar-nav">
-          <li ng-show="session.logged_in">
-            <a ng-click="showProfile()"><i class="fa fa-cogs"></i> Profile</a>
-          </li>
-          <li ng-hide="session.logged_in">
-            <a href="/api/2/sessions/login" target="_self"><i class="fa fa-github"></i> Sign In</a>
-          </li>
-          <li ng-show="session.logged_in">
-            <a href="/api/2/sessions/logout" target="_self"><i class="fa fa-sign-out"></i> Sign Out</a>
-          </li>
-          <li>
-            <a href="/docs/introduction"><i class="fa fa-question-circle"></i> Help</a>
-          </li>
-        </ul>
-      </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li ng-show="session.logged_in">
+                    <a ng-click="showProfile()"><i class="fa fa-cogs"></i> Profile</a>
+                </li>
+                <li ng-hide="session.logged_in">
+                    <a href="/api/2/sessions/login" target="_self"><i class="fa fa-github"></i> Sign In</a>
+                </li>
+                <li ng-show="session.logged_in">
+                    <a href="/api/2/sessions/logout" target="_self"><i class="fa fa-sign-out"></i> Sign Out</a>
+                </li>
+                <li>
+                    <a href="/docs/introduction" target="_blank"><i class="fa fa-question-circle"></i> Help</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
+    {% if system_message %}
+        <div class="alert alert-warning system-message"><p>{{ system_message }}</p></div>
+    {% endif %}
+
     <div id="airlock" class="container">
-      <div class="row" ng-view></div>
+        <div class="row" ng-view></div>
     </div>
-  </div>
-  <footer>
+</div>
+<footer>
     <div class="container-fluid">
-      <p><strong>nomenklatura.</strong>
-      A data cleaning service that helps link and de-duplicate entities in raw data.<br/>
-      <a href="https://github.com/pudo/nomenklatura">
-        <i class="icon-github"></i> GitHub
-      </a>
-      &middot;
-      <a href="https://github.com/pudo/nomenklatura/issues">
-        Report an issue
-      </a>
-      &middot;
-      <a href="https://pudo.org">pudo.org</a>
-      &middot;
-      <a href="http://okfnlabs.org/">OKFN Labs</a>
-      &middot;
-      <a href="http://mozillaopennews.org/">Knight-Mozilla OpenNews</a>.
-      </p>
+        <p><strong>nomenklatura.</strong>
+            A data cleaning service that helps link and de-duplicate entities in raw data.<br/>
+            <a href="https://github.com/unicef/nomenklatura" target="_blank">
+                <i class="icon-github"></i> GitHub
+            </a>
+            &middot;
+            <a href="https://github.com/unicef/nomenklatura/issues" target="_blank">
+                Report an issue
+            </a>
+            &middot;
+            <a href="https://pudo.org" target="_blank">pudo.org</a>
+            &middot;
+            <a href="http://okfnlabs.org/" target="_blank">OKFN Labs</a>
+            &middot;
+            <a href="http://mozillaopennews.org/" target="_blank">Knight-Mozilla OpenNews</a>.
+        </p>
     </div>
-  </footer>
+</footer>
 
-  {% for path, tmpl in angular_templates %}
+{% for path, tmpl in angular_templates %}
     <script id="{{path}}" type="text/ng-template">{{tmpl|safe}}</script>
-  {% endfor %}
+{% endfor %}
 
-  {% assets "deps" %}
+{% assets "deps" %}
     <script src="{{ ASSET_URL }}"></script>
-  {% endassets %}
+{% endassets %}
 
-  {% assets "app" %}
+{% assets "app" %}
     <script src="{{ ASSET_URL }}"></script>
-  {% endassets %}
+{% endassets %}
+
+{% include "matomo.html" %}
+
 </body>
 </html>

@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from formencode import Schema, All, Invalid, validators
+from formencode import All, Invalid, Schema, validators
 from werkzeug.exceptions import NotFound
 
 from nomenklatura.core import db
-from nomenklatura.model.common import Name, FancyValidator
+from nomenklatura.model.common import FancyValidator, Name
 
 
 class AvailableDatasetName(FancyValidator):
@@ -57,21 +57,18 @@ class Dataset(db.Model):
     enable_invalid = db.Column(db.Boolean, default=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow,
-            onupdate=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    entities = db.relationship('Entity', backref='dataset',
-                             lazy='dynamic')
-    uploads = db.relationship('Upload', backref='dataset',
-                               lazy='dynamic')
+    entities = db.relationship('Entity', backref='dataset', lazy='dynamic')
+    uploads = db.relationship('Upload', backref='dataset', lazy='dynamic')
 
     def to_dict(self):
         from nomenklatura.model.entity import Entity
-        num_aliases = Entity.all(self).filter(Entity.canonical_id!=None).count()
+        num_aliases = Entity.all(self).filter(not Entity.canonical_id).count()
         num_review = Entity.all(self).filter_by(reviewed=False).count()
         num_entities = Entity.all(self).count()
         num_invalid = Entity.all(self).filter_by(invalid=True).count()
-    
+
         return {
             'id': self.id,
             'name': self.name,

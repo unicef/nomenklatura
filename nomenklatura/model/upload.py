@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from tablib import Dataset as TablibDataset
 from werkzeug.exceptions import NotFound
 
@@ -15,9 +16,7 @@ class Upload(db.Model):
     dataset_id = db.Column(db.Integer, db.ForeignKey('dataset.id'))
     creator_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow,
-                           onupdate=datetime.utcnow)
-
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def to_dict(self):
         data = {
@@ -42,11 +41,11 @@ class Upload(db.Model):
         if not hasattr(self, '_tab'):
             try:
                 self._tab = TablibDataset()
-                self._tab.csv = self.data
+                self._tab.csv = self.data.decode('utf-8')
                 self._tab_error = None
-            except Exception, e:
+            except Exception as e:
                 self._tab = None
-                self._tab_error = unicode(e)
+                self._tab_error = str(e)
         return self._tab
 
     @classmethod
@@ -72,7 +71,6 @@ class Upload(db.Model):
         upload.dataset = dataset
         upload.creator = account
         upload.mimetype = file_.mimetype
-        upload.filename = file_.filename
         upload.filename = file_.filename
         upload.data = file_.read()
         db.session.add(upload)

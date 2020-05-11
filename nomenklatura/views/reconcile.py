@@ -1,12 +1,11 @@
 import json
 
+from apikit import get_limit, get_offset, jsonify
 from flask import Blueprint, request, url_for
-from apikit import jsonify, get_limit, get_offset
 from werkzeug.exceptions import BadRequest
 
 from nomenklatura.model import Dataset, Entity
 from nomenklatura.model.matching import find_matches
-
 
 section = Blueprint('reconcile', __name__)
 
@@ -38,7 +37,7 @@ def reconcile_index(dataset):
 def reconcile_op(dataset, query):
     try:
         limit = max(1, min(100, int(query.get('limit'))))
-    except:
+    except Exception:
         limit = 5
 
     matches = find_matches(dataset, query.get('query', ''))
@@ -55,7 +54,7 @@ def reconcile_op(dataset, query):
             }],
             'id': match['entity'].id,
             'uri': url_for('entities.view', id=match['entity'].id, _external=True),
-            'match': match['score']==100
+            'match': match['score'] == 100
         })
     return {
         'result': results,

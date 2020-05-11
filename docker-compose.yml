@@ -1,18 +1,52 @@
-nomenklatura:
-  build: .
-  ports:
-    - "8080:8080"
-  volumes:
-    - .:/usr/src/app
-  links:
-    - database
-  environment:
-    DATABASE_URL: postgres://nomenklatura:@database/nomenklatura
-    SECRET_KEY: CHANGE_ME
-    GITHUB_CLIENT_ID: CHANGE_ME
-    GITHUB_CLIENT_SECRET: CHANGE_ME
+version: '3.3'
 
-database:
-  image: postgres:9.4
-  environment:
-    POSTGRES_USER: nomenklatura
+services:
+  nomenklatura:
+    image: unicef/nomenklatura:1.0
+    container_name: nomenklatura
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://postgres:pass@db:5432/nomenklatura
+      SECRET_KEY: CHANGE_ME
+      DEBUG: 'True'
+      GITHUB_CLIENT_ID: CHANGE_ME
+      GITHUB_CLIENT_SECRET: CHANGE_ME
+    depends_on:
+    - db
+    - redis
+#    volumes:
+#    - "./nomenklatura:/code"
+#    - "./volumes/backend/var/donor_reporting_portal/:/var/donor_reporting_portal"
+    labels:
+      - traefik.backend=nomenklatura
+      - traefik.frontend.rule=PathPrefix:/
+      - traefik.priority=1
+      - traefik.enable=true
+      - traefik.port=8000
+
+  proxy:
+    image: traefik:v1.7
+    container_name: nomenklatura_proxy
+    command: --api --docker
+    ports:
+      - "8082:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  db:
+    image: postgres:12-alpine
+    container_name: nomenklatura_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: nomenklatura
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - "./volumes/db2/data:/var/lib/postgresql/data"
+
+  redis:
+    image: redis
+    container_name: nomenklatura_redis
+    hostname: redis
+    command: ["redis-server", "--appendonly", "yes"]

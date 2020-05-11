@@ -1,14 +1,14 @@
-from flask.ext.assets import Bundle
+from webassets import Bundle
 
 from nomenklatura.core import assets
 
 deps_assets = Bundle(
-    'vendor/jquery/dist/jquery.js',
-    'vendor/bootstrap/js/collapse.js',
-    'vendor/angular/angular.js',
-    'vendor/angular-route/angular-route.js',
-    'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
-    'vendor/ngUpload/ng-upload.js',
+    'jquery/dist/jquery.js',
+    'bootstrap/js/collapse.js',
+    'angular/angular.js',
+    'angular-route/angular-route.js',
+    'angular-bootstrap/ui-bootstrap-tpls.js',
+    'ngUpload/ng-upload.js',
     filters='uglifyjs',
     output='assets/deps.js'
 )
@@ -32,8 +32,8 @@ app_assets = Bundle(
 )
 
 css_assets = Bundle(
-    'vendor/bootstrap/less/bootstrap.less',
-    'vendor/font-awesome/less/font-awesome.less',
+    'bootstrap/less/bootstrap.less',
+    'font-awesome/less/font-awesome.less',
     'style/style.less',
     filters='less,cssrewrite',
     output='assets/style.css'
