@@ -7,7 +7,7 @@ sudo apt-get install -y software-properties-common python-software-properties py
 sudo add-apt-repository -y ppa:chris-lea/node.js
 sudo apt-get update -y
 sudo apt-get install -y nodejs postgresql python-virtualenv git postgresql-server-dev-9.1 postgresql-contrib python-dev libxml2-dev libxslt1-dev
-sudo npm install -g bower less uglify-js
+sudo npm install
 
 virtualenv /home/vagrant/env
 source /home/vagrant/env/bin/activate
