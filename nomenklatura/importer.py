@@ -1,3 +1,5 @@
+import logging
+
 from formencode import Invalid
 
 from nomenklatura.core import celery as app, db
@@ -54,9 +56,8 @@ def import_upload(upload_id, account_id, mapping):
             entity.update(row, account)
             print(entity)
             if i % 100 == 0:
-                print('COMMIT')
                 db.session.commit()
+                logging.debug('Commit')
         except Invalid as inv:
-            # TODO: logging
-            print(inv)
+            logging.warning('Exception during import: {}'.format(str(inv)))
     db.session.commit()
