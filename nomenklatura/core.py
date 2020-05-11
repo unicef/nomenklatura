@@ -15,8 +15,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.config.from_object(settings)
-app.config.from_envvar('NOMENKLATURA_SETTINGS', silent=True)
-app.config.from_envvar('SQLALCHEMY_TRACK_MODIFICATIONS', silent=True)
 
 app_name = app.config.get('APP_NAME')
 
