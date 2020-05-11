@@ -117,7 +117,7 @@ class Entity(db.Model):
             name = normalize(name)
         if dataset.ignore_case:
             attr = func.lower(attr)
-            if isinstance(name, basestring):
+            if isinstance(name, str):
                 name = name.lower()
         q = q.filter(attr == name)
         return q.first()

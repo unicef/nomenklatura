@@ -61,3 +61,4 @@ def import_upload(upload_id, account_id, mapping):
         except Invalid as inv:
             logging.warning('Exception during import: {}'.format(str(inv)))
     db.session.commit()
+    logging.info('Import Completed')

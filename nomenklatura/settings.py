@@ -8,6 +8,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get('SQLALCHEMY_TRACK_MODIFICATIONS'
 
 CELERY_BROKER = os.environ.get('CLOUDAMQP_URL')
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'amqp://guest:guest@localhost:5672//')
+CELERY_TASK_ALWAYS_EAGER = os.getenv('CELERY_TASK_ALWAYS_EAGER', False)
 
 ALLOWED_EXTENSIONS = set(['csv', 'tsv', 'ods', 'xls', 'xlsx', 'txt'])
 LOG_FOLDER = os.getenv('LOG_FOLDER', '/var/log/nomenklatura')
