@@ -22,7 +22,7 @@ Quick Installation
 ------------------------------------
 
     pipenv install
-    npm install  --prefix ./nomenklatura/static/vendor
+    npm install
 
     psql -c 'CREATE DATABASE nomenklatura;' -U postgres
 

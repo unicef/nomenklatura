@@ -1,5 +1,4 @@
 #!/bin/sh -e
-mkdir -p nomenklatura/static/vendor
 mkdir -p /var/log/nomenklatura
 python manage.py createdb
 
