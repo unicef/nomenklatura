@@ -1,2 +1,2 @@
 NAME = 'nomenklatura'
-VERSION = __version__ = '1.0'
+VERSION = __version__ = '1.1'
