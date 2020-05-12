@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   nomenklatura:
-    image: unicef/nomenklatura:1.0
+    image: unicef/nomenklatura:latest
     container_name: nomenklatura
     ports:
       - "8000:8000"

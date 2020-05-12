@@ -55,7 +55,8 @@ WORKDIR /var/nomenklatura
 
 ADD package.json .
 ADD package-lock.json .
-RUN npm install install
+RUN npm install
+RUN npm install -g less
 
 ADD . /code/
 WORKDIR /code/
@@ -70,3 +71,5 @@ ENTRYPOINT ["entrypoint.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
 
 EXPOSE 8000
+
+CMD ["nomenklatura"]
