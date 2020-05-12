@@ -50,19 +50,14 @@ RUN apk add postgresql-client \
     git
 
 
-ADD contrib/*.sh /usr/local/bin/
-WORKDIR /var/nomenklatura
-
-ADD package.json .
-ADD package-lock.json .
-RUN npm install
-RUN npm install -g less
+EXPOSE 8000
 
 ADD . /code/
 WORKDIR /code/
 
 COPY --from=builder /usr/local/lib/python3.8/site-packages /usr/local/lib/python3.8/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
+ADD contrib/*.sh /usr/local/bin/
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/code
@@ -70,6 +65,6 @@ ENV PYTHONUNBUFFERED=1 \
 ENTRYPOINT ["entrypoint.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
 
-EXPOSE 8000
+WORKDIR /var/nomenklatura
 
 CMD ["nomenklatura"]
