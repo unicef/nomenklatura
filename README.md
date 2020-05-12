@@ -9,15 +9,33 @@ The focus of nomenklatura is on data integration, it does not provide further fu
 ### About this fork
 This is a fork of [pudo/nomenklatura](https://github.com/pudo/nomenklatura). OpenNames.org, a public hosted instance of nomenklatura got [recently shut down](https://github.com/pudo/nomenklatura/wiki/OpenNames.org-Shutdown-Notice) because the project has taken a different direction. This fork tries to maintain a compatible version of nomenklatura thats usable as a plug-in replacement.
 
-A docker image is available as `robbi5/nomenklatura` in the [docker index](https://registry.hub.docker.com/u/robbi5/nomenklatura/).
+A docker image is available as `unicef/nomenklatura` in the [docker index](https://hub.docker.com/r/unicef/nomenklatura/).
+
+
+System Requirements
+------------------------------------
+* postgres
+* virtualenvwrapper
+
+
+Quick Installation
+------------------------------------
+
+    pipenv install
+    npm install  --prefix ./nomenklatura/static/vendor
+
+    psql -c 'CREATE DATABASE nomenklatura;' -U postgres
+
+    python manage.py createdb
+    python manage.py runserver
+
 
 ### Usage
 
-If you want to deploy your own Nomenklatura instance, use the [`robbi5/nomenklatura` docker container](https://registry.hub.docker.com/u/robbi5/nomenklatura/):
+If you want to deploy your own Nomenklatura instance, use the [`unicef/nomenklatura` docker container](https://hub.docker.com/r/unicef/nomenklatura/):
 
 ```
-docker pull robbi5/nomenklatura
-docker run -e DATABASE_URL=postgres://username:password@databasehost/nomenklatura -e SECRET_KEY=something_unique_and_secret_here -p 8080:8080 robbi5/nomenklatura
+docker-compose up
 ```
 
 Required environment variables:
@@ -37,12 +55,6 @@ Then add these environment variables:
 GITHUB_CLIENT_ID: your_client_id_from_github
 GITHUB_CLIENT_SECRET: your_client_secret_from_github
 ```
-
-#### Reverse Proxy
-It is recommended that you deploy an reverse proxy like nginx in front of your Nomenklatura instance - especially in production.
-
-You should add the `FORWARDED_ALLOW_IPS` environment variable, so Nomenklatura recognizes your reverse proxy and
-uses the `X-Forwarded-For` and `X-Forwarded-Scheme` headers. This enables usage of Nomenklatura if your reverse proxy accepts HTTPS connections.
 
 ### Contact, contributions etc.
 
