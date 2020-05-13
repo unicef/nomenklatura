@@ -21,6 +21,7 @@ MEMCACHE_HOST = os.environ.get('MEMCACHIER_SERVERS')
 
 GITHUB_CLIENT_ID = os.environ.get('GITHUB_CLIENT_ID')
 GITHUB_CLIENT_SECRET = os.environ.get('GITHUB_CLIENT_SECRET')
+
 SENTRY_DSN = os.getenv('SENTRY_DSN')
 
 S3_BUCKET = os.environ.get('S3_BUCKET', 'nomenklatura')

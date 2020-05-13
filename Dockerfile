@@ -47,15 +47,11 @@ RUN apk add postgresql-client \
     libxml2-dev \
     jpeg \
     nodejs-npm \
-    git
-
+    git \
+    bash
 
 ADD contrib/*.sh /usr/local/bin/
 WORKDIR /var/nomenklatura
-
-ADD package.json .
-ADD package-lock.json .
-RUN npm install install
 
 ADD . /code/
 WORKDIR /code/
@@ -64,9 +60,16 @@ COPY --from=builder /usr/local/lib/python3.8/site-packages /usr/local/lib/python
 COPY --from=builder /usr/local/bin /usr/local/bin
 
 ENV PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/code
+    PYTHONPATH=/code \
+    CELERY_AUTOSCALE="5,1" \
+    CELERY_BROKER_URL="redis://127.0.0.1:6379/2" \
+    CELERY_LOGLEVEL="ERROR" \
+    CELERY_RESULT_BACKEND="redis://127.0.0.1:6379/3" \
+    CELERY_EXTRA=""
 
 ENTRYPOINT ["entrypoint.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
 
 EXPOSE 8000
+
+CMD ["nomenklatura"]

@@ -33,7 +33,7 @@ assets = Environment(app)
 
 assets.load_path = [
     os.path.join(os.path.dirname(__file__), 'static'),
-    os.path.join(os.path.dirname(__file__), os.pardir, 'node_modules'),
+    os.path.abspath(os.path.join(app.root_path, os.pardir, 'node_modules'))
 ]
 
 celery = Celery(app_name, broker=app.config['CELERY_BROKER_URL'])
