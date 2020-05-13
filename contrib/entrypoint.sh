@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 mkdir -p /var/log/nomenklatura
 python manage.py createdb
 
@@ -21,5 +21,6 @@ elif [[ "$*" == "nomenklatura" ]];then
         --access-logfile - \
         --log-level debug
 else
+    echo error
     exec "$@"
 fi
