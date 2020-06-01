@@ -11,8 +11,6 @@ init = os.path.join(ROOT, 'nomenklatura', '__init__.py')
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 _name_re = re.compile(r'NAME\s+=\s+(.*)')
 
-# sys.path.insert(0, os.path.join(ROOT, 'src'))
-
 with open(init, 'rb') as f:
     content = f.read().decode('utf-8')
     VERSION = str(ast.literal_eval(_version_re.search(content).group(1)))
