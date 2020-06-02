@@ -3,10 +3,10 @@ import os
 from logging.handlers import RotatingFileHandler
 
 import sentry_sdk
+from authlib.integrations.flask_client import OAuth
 from celery import Celery
 from flask import Flask, url_for as _url_for
 from flask_assets import Environment
-from flask_oauthlib.client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from kombu import Exchange, Queue
 
@@ -45,16 +45,31 @@ app.config['CELERY_QUEUES'] = (
 
 celery.config_from_object(app.config)
 
-oauth = OAuth()
-github = oauth.remote_app(
-    'github',
-    base_url='https://github.com/login/oauth/',
-    authorize_url='https://github.com/login/oauth/authorize',
-    request_token_url=None,
+oauth = OAuth(app)
+oauth.register(
+    name='github',
+    client_id=app.config.get('GITHUB_CLIENT_ID'),
+    client_secret=app.config.get('GITHUB_CLIENT_SECRET'),
     access_token_url='https://github.com/login/oauth/access_token',
-    consumer_key=app.config.get('GITHUB_CLIENT_ID'),
-    consumer_secret=app.config.get('GITHUB_CLIENT_SECRET'))
+    access_token_params=None,
+    authorize_url='https://github.com/login/oauth/authorize',
+    authorize_params=None,
+    api_base_url='https://api.github.com/',
+    client_kwargs={'scope': 'user:email'},
+)
+github = oauth.github
 
+
+# oauth = OAuth()
+# github = oauth.remote_app(
+#     'github',
+#     base_url='https://github.com/login/oauth/',
+#     authorize_url='https://github.com/login/oauth/authorize',
+#     request_token_url=None,
+#     access_token_url='https://github.com/login/oauth/access_token',
+#     consumer_key=app.config.get('GITHUB_CLIENT_ID'),
+#     consumer_secret=app.config.get('GITHUB_CLIENT_SECRET'))
+#
 
 def url_for(*a, **kw):
     try:

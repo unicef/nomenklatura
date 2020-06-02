@@ -1,12 +1,11 @@
 import logging
 
-import requests
 from apikit import jsonify
 from flask import Blueprint, redirect, request, session, url_for
 from werkzeug.exceptions import Forbidden
 
 from nomenklatura import authz
-from nomenklatura.core import app, db, github
+from nomenklatura.core import app, db, oauth
 from nomenklatura.model import Account, Dataset
 
 section = Blueprint('sessions', __name__)
@@ -38,8 +37,8 @@ def get_authz():
 
 @section.route('/sessions/login')
 def login():
-    callback = url_for('sessions.authorized', _external=True)
-    return github.authorize(callback=callback)
+    redirect_uri = url_for('sessions.authorize', _external=True)
+    return oauth.github.authorize_redirect(redirect_uri)
 
 
 @section.route('/sessions/logout')
@@ -49,22 +48,18 @@ def logout():
     return redirect('/')
 
 
-@section.route('/sessions/callback')
-@github.authorized_handler
-def authorized(resp):
-    if 'access_token' not in resp:
-        return redirect(url_for('index', _external=True))
-    access_token = resp['access_token']
-    session['access_token'] = access_token, ''
-    res = requests.get('https://api.github.com/user?access_token=%s' % access_token,
-                       verify=False)
-    data = res.json()
-    for k, v in data.items():
+@section.route('/authorize')
+def authorize():
+    token = oauth.github.authorize_access_token()
+    resp = oauth.github.get('user', token=token)
+    profile = resp.json()
+    for k, v in profile.items():
         session[k] = v
-    account = Account.by_github_id(data.get('id'))
+    account = Account.by_github_id(profile.get('id'))
     if account is None:
         if app.config.get('SIGNUP_DISABLED'):
             raise Forbidden("Sorry, account creation is disabled")
-        account = Account.create(data)
+        Account.create(profile)
         db.session.commit()
+
     return redirect('/')
