@@ -71,4 +71,8 @@ def angular_templates():
 @app.route('/docs/<path:id>')
 @app.route('/')
 def index(**kw):
-    return render_template('app.html', angular_templates=angular_templates(), system_message=app.config.get('SYSTEM_MESSAGE'))
+    return render_template(
+        'app.html',
+        angular_templates=angular_templates(),
+        system_message=app.config.get('SYSTEM_MESSAGE')
+    )
