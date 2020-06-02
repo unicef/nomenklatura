@@ -10,8 +10,8 @@ class Matches:
     def __init__(self, q):
         self.lq = self.q = q
 
-    def limit(self, l):
-        self.lq = self.lq.limit(l)
+    def limit(self, lim):
+        self.lq = self.lq.limit(lim)
         return self
 
     def offset(self, o):
